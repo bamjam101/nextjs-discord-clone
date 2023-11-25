@@ -22,11 +22,14 @@
 
 # debug
 npm-debug.log*
+package-lock.json
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel

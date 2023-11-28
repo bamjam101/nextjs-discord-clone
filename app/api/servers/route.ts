@@ -5,9 +5,9 @@ import { currentProfile } from "@/actions/getProfile";
 import { db } from "@/lib/database";
 import { MemberRole } from "@prisma/client";
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { name, imageUrl } = await req.json();
+    const { name, imageUrl } = await request.json();
 
     const profile = await currentProfile();
 

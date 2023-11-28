@@ -1,28 +1,28 @@
 "use client";
+import { useState } from "react";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-
+import axios from "axios";
+import useOrigin from "@/hooks/useOrigin";
 import { useModal } from "@/hooks/useModal";
+
+import { Check, Copy, RefreshCw } from "lucide-react";
+
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
-import useOrigin from "@/hooks/useOrigin";
-import { useState } from "react";
-import axios from "axios";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 
 const InviteModal = () => {
+  const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const origin = useOrigin();
   const { isOpen, onOpen, onClose, type, data } = useModal();
 
   const server = data.server;
-
   const isModalOpen = isOpen && type === "invite";
 
   const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-
-  const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const onCopy = () => {
     navigator.clipboard.writeText(inviteUrl);

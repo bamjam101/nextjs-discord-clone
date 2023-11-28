@@ -1,20 +1,20 @@
-import { currentProfile } from "@/actions/getProfile";
-import ServerSidebar from "@/components/server/ServerSidebar";
-import { db } from "@/lib/database";
-import { redirectToSignIn } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import React from "react";
 
-type I_Params = {
-  serverId: string;
-};
+import { redirect } from "next/navigation";
+import { redirectToSignIn } from "@clerk/nextjs";
+
+import { db } from "@/lib/database";
+import { I_ServerIdParams } from "@/types";
+import { currentProfile } from "@/actions/getProfile";
+
+import ServerSidebar from "@/components/server/ServerSidebar";
 
 const ServerIdLayout = async ({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: I_Params;
+  params: I_ServerIdParams;
 }) => {
   const profile = await currentProfile();
 

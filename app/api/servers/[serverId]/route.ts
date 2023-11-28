@@ -1,8 +1,9 @@
+import { I_ServerIdParams } from "@/types";
+
+import { NextResponse } from "next/server";
+
 import { currentProfile } from "@/actions/getProfile";
 import { db } from "@/lib/database";
-import { I_ServerIdParams } from "@/types";
-import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 
 export async function PATCH(
   request: Request,
@@ -10,6 +11,8 @@ export async function PATCH(
 ) {
   try {
     const profile = await currentProfile();
+
+    const { name, imageUrl } = await request.json();
 
     if (!profile) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -25,13 +28,14 @@ export async function PATCH(
         profileId: profile.id,
       },
       data: {
-        inviteCode: uuidv4(),
+        name,
+        imageUrl,
       },
     });
 
     return NextResponse.json(server);
   } catch (error) {
-    console.log("[SERVER_ID]:", error);
+    console.log("[SERVER_PATCH]:", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

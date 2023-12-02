@@ -5,7 +5,7 @@ import { redirectToSignIn } from "@clerk/nextjs";
 
 import { db } from "@/lib/database";
 import { I_ServerIdParams } from "@/types";
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 
 import ServerSidebar from "@/components/server/ServerSidebar";
 

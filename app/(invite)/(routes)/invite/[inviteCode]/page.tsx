@@ -1,4 +1,4 @@
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";

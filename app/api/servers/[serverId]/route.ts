@@ -2,7 +2,7 @@ import { I_ServerIdParams } from "@/types";
 
 import { NextResponse } from "next/server";
 
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
 
 export async function PATCH(

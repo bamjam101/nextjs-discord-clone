@@ -1,10 +1,11 @@
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
+import { I_ServerIdParams } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { serverId: string } }
+  { params }: { params: I_ServerIdParams }
 ) {
   try {
     const profile = await currentProfile();

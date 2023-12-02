@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/database";
 import { ChannelType, MemberRole } from "@prisma/client";
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 
 import ServerHeader from "./ServerHeader";
 import ServerSearch from "./ServerSearch";

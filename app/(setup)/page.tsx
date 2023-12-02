@@ -1,6 +1,6 @@
 import InitialModal from "@/components/modals/InitialModal";
 import { db } from "@/lib/database";
-import { initialProfile } from "@/actions/getProfile";
+import { initialProfile } from "@/actions/profile";
 import { redirect } from "next/navigation";
 import React from "react";
 

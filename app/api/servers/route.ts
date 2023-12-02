@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import { NextResponse } from "next/server";
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
 import { MemberRole } from "@prisma/client";
 

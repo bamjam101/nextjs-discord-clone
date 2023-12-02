@@ -2,7 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 
 import { db } from "@/lib/database";
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 
 import NavigationAction from "./NavigationAction";
 

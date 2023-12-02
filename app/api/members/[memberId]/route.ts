@@ -1,10 +1,11 @@
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
+import { I_MemeberIdParams } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { memberId: string } }
+  { params }: { params: I_MemeberIdParams }
 ) {
   try {
     const profile = await currentProfile();
@@ -68,7 +69,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { memberId: string } }
+  { params }: { params: I_MemeberIdParams }
 ) {
   try {
     const profile = await currentProfile();

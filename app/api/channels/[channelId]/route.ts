@@ -1,11 +1,12 @@
-import { currentProfile } from "@/actions/getProfile";
+import { currentProfile } from "@/actions/profile";
 import { db } from "@/lib/database";
+import { I_ChannelIdParams } from "@/types";
 import { MemberRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { channelId: string } }
+  { params }: { params: I_ChannelIdParams }
 ) {
   try {
     const profile = await currentProfile();
@@ -69,7 +70,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { channelId: string } }
+  { params }: { params: I_ChannelIdParams }
 ) {
   try {
     const profile = await currentProfile();

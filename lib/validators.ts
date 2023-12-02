@@ -18,6 +18,10 @@ export const createChannelModalFormSchema = z.object({
   type: z.nativeEnum(ChannelType),
 });
 
+export const chatInputSchema = z.object({
+  content: z.string().min(1),
+});
+
 export type CreateServerModalFormData = z.infer<
   typeof createServerModalFormSchema
 >;
@@ -25,3 +29,5 @@ export type CreateServerModalFormData = z.infer<
 export type CreateChannelModalFormData = z.infer<
   typeof createChannelModalFormSchema
 >;
+
+export type ChatInputDataType = z.infer<typeof chatInputSchema>;

@@ -1,12 +1,14 @@
 import React from "react";
 
+import { db } from "@/lib/database";
+import { currentProfile } from "@/actions/profile";
+
+import { redirect } from "next/navigation";
 import { redirectToSignIn } from "@clerk/nextjs";
 
-import { currentProfile } from "@/actions/profile";
 import { I_ChannelIdParams, I_ServerIdParams } from "@/types";
-import { db } from "@/lib/database";
-import { redirect } from "next/navigation";
 import ChatHeader from "@/components/chat/ChatHeader";
+import ChatInput from "@/components/chat/ChatInput";
 
 type ChannelIdPageProps = I_ChannelIdParams & I_ServerIdParams;
 
@@ -40,6 +42,17 @@ const ChannelIdPage = async ({ params }: { params: ChannelIdPageProps }) => {
         name={channel.name}
         serverId={channel.serverId}
         type="channel"
+      />
+      <div className="flex-1">Future Messages</div>
+
+      <ChatInput
+        name={channel.name}
+        type="channel"
+        apiUrl="/api/socket/messages"
+        query={{
+          channelId: channel.id,
+          serverId: channel.serverId,
+        }}
       />
     </section>
   );

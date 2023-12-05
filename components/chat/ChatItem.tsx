@@ -1,21 +1,29 @@
 "use client";
-import { Member, MemberRole, Profile } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import UserAvatar from "../UserAvatar";
-import ActionTooltip from "../ActionTooltip";
-import { roleIconMap } from "../modals/MembersModal";
+
 import Image from "next/image";
-import { Edit, FileIcon, Trash } from "lucide-react";
-import { cn } from "@/lib/utils";
+
+import { roleIconMap } from "../modals/MembersModal";
+import { Member, MemberRole, Profile } from "@prisma/client";
 
 import qs from "query-string";
+import { cn } from "@/lib/utils";
+import UserAvatar from "../UserAvatar";
+import ActionTooltip from "../ActionTooltip";
+import { Edit, FileIcon, Trash } from "lucide-react";
+
+import axios from "axios";
 import { useForm } from "react-hook-form";
-import { ChatInputDataType, chatInputSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
+
+import { useModal } from "@/hooks/useModal";
+
+import { ChatInputDataType, chatInputSchema } from "@/lib/validators";
+
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
 type ChatItemProps = {
   id: string;
@@ -44,8 +52,12 @@ const ChatItem = ({
   socketQuery,
   socketUrl,
 }: ChatItemProps) => {
+  const router = useRouter();
+  const params = useParams();
+
   const [isEditing, setIsEditing] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+
+  const { onOpen } = useModal();
 
   const form = useForm<ChatInputDataType>({
     resolver: zodResolver(chatInputSchema),
@@ -55,6 +67,14 @@ const ChatItem = ({
   });
 
   const isLoading = form.formState.isSubmitting;
+
+  const onMemberClick = () => {
+    if (member.id === currentMember.id) {
+      return;
+    }
+
+    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+  };
 
   const onSubmit = async (data: ChatInputDataType) => {
     try {
@@ -68,6 +88,8 @@ const ChatItem = ({
       form.reset();
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsEditing(false);
     }
   };
 
@@ -102,13 +124,19 @@ const ChatItem = ({
   return (
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
       <div className="group flex gap-x-2 items-start w-full">
-        <figure className="cursor-pointer hover:drop-down-shadow-md transition">
+        <figure
+          onClick={onMemberClick}
+          className="cursor-pointer hover:drop-down-shadow-md transition"
+        >
           <UserAvatar src={member.profile.imageUrl} />
         </figure>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p className="font-semibold text-sm hover:underline cursor-pointer">
+              <p
+                onClick={onMemberClick}
+                className="font-semibold text-sm hover:underline cursor-pointer"
+              >
                 {member.profile.name}
               </p>
             </div>
@@ -212,7 +240,15 @@ const ChatItem = ({
             </ActionTooltip>
           )}
           <ActionTooltip label="Delete">
-            <Trash className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-rose-600 transition" />
+            <Trash
+              onClick={() =>
+                onOpen("deleteMessage", {
+                  apiUrl: `${socketUrl}/${id}`,
+                  query: socketQuery,
+                })
+              }
+              className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-rose-600 transition"
+            />
           </ActionTooltip>
         </div>
       )}

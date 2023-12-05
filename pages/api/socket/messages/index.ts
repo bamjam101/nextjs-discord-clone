@@ -1,6 +1,7 @@
-import { currentProfileForPagesServer } from "@/actions/profile";
 import { db } from "@/lib/database";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import { currentProfileForPagesServer } from "@/actions/profile";
 
 export default async function handler(
   req: NextApiRequest,

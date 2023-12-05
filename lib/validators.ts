@@ -22,6 +22,12 @@ export const chatInputSchema = z.object({
   content: z.string().min(1),
 });
 
+export const fileUploadModalFormSchema = z.object({
+  fileUrl: z.string().min(1, {
+    message: "Attachment is required.",
+  }),
+});
+
 export type CreateServerModalFormData = z.infer<
   typeof createServerModalFormSchema
 >;
@@ -31,3 +37,5 @@ export type CreateChannelModalFormData = z.infer<
 >;
 
 export type ChatInputDataType = z.infer<typeof chatInputSchema>;
+
+export type FileUploadModalFormData = z.infer<typeof fileUploadModalFormSchema>;
